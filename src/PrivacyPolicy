@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Charset & Viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>License Manager | Privacy</title>
+    <!-- 🌐 Open Graph for Discord embeds -->
+    <meta property="og:title" content="License Manager | Discord x Roblox Integration">
+    <meta property="og:description" content="A powerful license and role management bot for Discord, fully integrated with Roblox.">
+    <meta property="og:image" content="https://i.ibb.co/ymGZd6nJ/Licence-Manager.png"> <!-- Your working banner URL -->
+    <meta property="og:url" content="https://licencemanager.infy.uk">
+    <meta property="og:type" content="website">
+
+    <!-- 🐦 Twitter Meta (optional but nice to have) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="License Manager | Discord x Roblox Integration">
+    <meta name="twitter:description" content="A powerful license and role management bot for Discord, fully integrated with Roblox.">
+    <meta name="twitter:image" content="https://i.ibb.co/ymGZd6nJ/Licence-Manager.png">
+
+    <!-- 🧠 Favicon & Fonts -->
+    <link rel="icon" href="https://i.ibb.co/tTdGm1y4/License-Manager-B-1.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 🎨 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-darker: #0a0a0a;
+            --accent: #7B2CBF;
+            --accent-light: #9D4EDD;
+            --text-primary: #f5f5f5;
+            --text-secondary: #b3b3b3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--bg-darker);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(123, 44, 191, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 28px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+                /* Account Dropdown */
+        .account-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .account-btn {
+            background-color: rgba(123, 44, 191, 0.2);
+            color: var(--text-primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .account-btn:hover {
+            background-color: rgba(123, 44, 191, 0.4);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--bg-darker);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(123, 44, 191, 0.3);
+        }
+        
+        .dropdown-content a {
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: rgba(123, 44, 191, 0.2);
+            color: var(--accent);
+        }
+        
+        .account-dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        .privacy-container {
+            padding: 180px 0 100px;
+        }
+        
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .privacy-header h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .privacy-header p {
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .privacy-content {
+            background-color: var(--bg-darker);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .privacy-section {
+            margin-bottom: 40px;
+        }
+        
+        .privacy-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(123, 44, 191, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .privacy-section h3 {
+            font-size: 22px;
+            margin: 25px 0 15px;
+            color: var(--accent-light);
+        }
+        
+        .privacy-section p, .privacy-section ul {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .privacy-section ul {
+            padding-left: 30px;
+        }
+        
+        .privacy-section li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .privacy-section li:before {
+            content: '•';
+            position: absolute;
+            left: -15px;
+            color: var(--accent);
+        }
+        
+        .highlight {
+            background-color: rgba(123, 44, 191, 0.1);
+            padding: 20px;
+            border-left: 3px solid var(--accent);
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(123, 44, 191, 0.3);
+        }
+        
+        th {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--bg-darker);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(123, 44, 191, 0.2);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 20px;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(123, 44, 191, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .privacy-content {
+                padding: 30px 20px;
+            }
+            
+            .privacy-header h1 {
+                font-size: 32px;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-key logo-icon"></i>
+                    License<span>Manager</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.php">Home</a>
+                    <a href="index.php#features">Features</a>
+                    <a href="index.php#pricing">Pricing</a>
+                    <a href="TermsofService">Terms</a>
+                    <div class="account-dropdown">
+                        <button class="account-btn">
+                            <i class="fas fa-user"></i> Account <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Soon"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="Soon"><i class="fas fa-user-plus"></i> Register</a>
+                            <a href="Soon"><i class="fas fa-cog"></i> Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="privacy-container">
+        <div class="container">
+            <div class="privacy-header">
+                <h1>Privacy Policy</h1>
+                <p>Last Updated: July 15, 2025</p>
+            </div>
+            
+            <div class="privacy-content">
+                <div class="privacy-section">
+                    <h2>1. Introduction</h2>
+                    <p>LicenseManager ("we", "us", or "our") operates the LicenseManager Discord bot and associated web services (the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Service.</p>
+                    
+                    <div class="highlight">
+                        <p><strong>Important:</strong> By using the Service, you consent to the collection and use of information in accordance with this policy. If you disagree with any part of this policy, please do not use our Service.</p>
+                    </div>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>2. Information We Collect</h2>
+                    <p>We collect several types of information from and about users of our Service:</p>
+                    
+                    <h3>2.1 Discord Information</h3>
+                    <p>When you interact with our Discord bot, we may collect:</p>
+                    <ul>
+                        <li>Discord user ID</li>
+                        <li>Username and discriminator</li>
+                        <li>Avatar hash</li>
+                        <li>Server IDs where the bot is used</li>
+                        <li>Role information for license verification</li>
+                        <li>Messages sent to the bot in DM or server channels</li>
+                    </ul>
+                    
+                    <h3>2.2 Roblox Information</h3>
+                    <p>When you link your Roblox account, we may collect:</p>
+                    <ul>
+                        <li>Roblox user ID</li>
+                        <li>Username</li>
+                        <li>Avatar information</li>
+                        <li>Game pass/product ownership status</li>
+                        <li>Purchase history (for verification purposes)</li>
+                    </ul>
+                    
+                    <h3>2.3 Personal Information</h3>
+                    <p>When you register an account, we may collect:</p>
+                    <ul>
+                        <li>Email address</li>
+                        <li>Payment information (processed by third-party processors)</li>
+                        <li>IP address and device information</li>
+                    </ul>
+                    
+                    <h3>2.4 Cookies and Tracking Technologies</h3>
+                    <p>We use cookies and similar tracking technologies to:</p>
+                    <ul>
+                        <li>Authenticate users and maintain sessions</li>
+                        <li>Remember user preferences</li>
+                        <li>Analyze service usage</li>
+                        <li>Improve our Service</li>
+                    </ul>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>3. How We Use Your Information</h2>
+                    <p>We use the collected information for various purposes:</p>
+                    <table>
+                        <tr>
+                            <th>Purpose</th>
+                            <th>Data Used</th>
+                        </tr>
+                        <tr>
+                            <td>Provide and maintain our Service</td>
+                            <td>All necessary information</td>
+                        </tr>
+                        <tr>
+                            <td>Verify license ownership</td>
+                            <td>Discord ID, Roblox ID, purchase data</td>
+                        </tr>
+                        <tr>
+                            <td>Manage role assignments</td>
+                            <td>Discord ID, server ID, role information</td>
+                        </tr>
+                        <tr>
+                            <td>Process payments</td>
+                            <td>Email, payment processor data</td>
+                        </tr>
+                        <tr>
+                            <td>Customer support</td>
+                            <td>Contact information, usage data</td>
+                        </tr>
+                        <tr>
+                            <td>Improve our Service</td>
+                            <td>Aggregated usage data</td>
+                        </tr>
+                        <tr>
+                            <td>Communicate with you</td>
+                            <td>Email, Discord messages</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>4. Data Sharing and Disclosure</h2>
+                    <p>We may share information in these situations:</p>
+                    <ul>
+                        <li><strong>Service Providers:</strong> With third parties who perform services for us (payment processing, analytics, hosting)</li>
+                        <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+                        <li><strong>Business Transfers:</strong> In connection with a merger or sale of assets</li>
+                        <li><strong>With Your Consent:</strong> When you direct us to share information</li>
+                    </ul>
+                    
+                    <h3>4.1 Third-Party Services</h3>
+                    <p>We integrate with these services that have their own privacy policies:</p>
+                    <ul>
+                        <li>Discord API</li>
+                        <li>Roblox API</li>
+                        <li>Stripe/PayPal (payment processing)</li>
+                        <li>Google Analytics</li>
+                    </ul>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>5. Data Retention</h2>
+                    <p>We retain personal information only as long as necessary:</p>
+                    <ul>
+                        <li>Account data: Until you request deletion</li>
+                        <li>License verification data: 1 year after license expiration</li>
+                        <li>Transaction records: 7 years for tax purposes</li>
+                        <li>Cookies: Varies by type (session to 2 years)</li>
+                    </ul>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>6. Your Data Rights</h2>
+                    <p>Depending on your jurisdiction, you may have these rights:</p>
+                    <ul>
+                        <li>Access the personal data we hold about you</li>
+                        <li>Request correction of inaccurate data</li>
+                        <li>Request deletion of your data</li>
+                        <li>Object to or restrict processing</li>
+                        <li>Request data portability</li>
+                        <li>Withdraw consent (where applicable)</li>
+                    </ul>
+                    <p>To exercise these rights, contact us at privacy@licensemanager.com.</p>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>7. Data Security</h2>
+                    <p>We implement appropriate security measures including:</p>
+                    <ul>
+                        <li>Encryption of sensitive data</li>
+                        <li>Regular security audits</li>
+                        <li>Access controls</li>
+                        <li>Secure server infrastructure</li>
+                    </ul>
+                    <p>However, no method of transmission over the Internet is 100% secure.</p>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>8. International Data Transfers</h2>
+                    <p>Your information may be transferred to and maintained on computers located outside of your country where data protection laws may differ.</p>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>9. Children's Privacy</h2>
+                    <p>Our Service is not directed to children under 13. We do not knowingly collect personal information from children under 13. If we discover such data, we will delete it immediately.</p>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>10. Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy periodically. We will notify you of changes by posting the new policy on this page and updating the "Last Updated" date.</p>
+                </div>
+                
+                <div class="privacy-section">
+                    <h2>11. Contact Us</h2>
+                    <p>For questions about this Privacy Policy, contact us at:</p>
+                    <p>Email: privacy@licensemanager.com<br>
+                    Discord: discord.gg/licensemanager</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>LicenseManager</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">The ultimate solution for Discord license and role management with Roblox integration.</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/M823NF5K7s"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="Soon">Documentation</a></li>
+                        <li><a href="Soon">Changelog</a></li>
+                        <li><a href="https://licensemanager.betteruptime.com/">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="Soon">Blog</a></li>
+                        <li><a href="Soon">Tutorials</a></li>
+                        <li><a href="Soon">API Reference</a></li>
+                        <li><a href="Soon">Community</a></li>
+                        <li><a href="Soon">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="Soon">About Us</a></li>
+                        <li><a href="Soon">Careers</a></li>
+                        <li><a href="Soon">Contact</a></li>
+                        <li><a href="TermsofService">Legal</a></li>
+                        <li><a href="PrivacyPolicy">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Arriva Corporation | LicenceManager. All rights reserved. | Currently in development - COMING SOON</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.querySelector('header');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                header.style.transform = 'translateY(0)';
+                return;
+            }
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
