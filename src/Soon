@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Charset & Viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>License Manager | Soon</title>
+
+    <!-- 🌐 Open Graph for Discord embeds -->
+    <meta property="og:title" content="License Manager | Discord x Roblox Integration">
+    <meta property="og:description" content="A powerful license and role management bot for Discord, fully integrated with Roblox.">
+    <meta property="og:image" content="https://i.ibb.co/ymGZd6nJ/Licence-Manager.png"> <!-- Your working banner URL -->
+    <meta property="og:url" content="https://licencemanager.infy.uk">
+    <meta property="og:type" content="website">
+
+    <!-- 🐦 Twitter Meta (optional but nice to have) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="License Manager | Discord x Roblox Integration">
+    <meta name="twitter:description" content="A powerful license and role management bot for Discord, fully integrated with Roblox.">
+    <meta name="twitter:image" content="https://i.ibb.co/ymGZd6nJ/Licence-Manager.png">
+
+    <!-- 🧠 Favicon & Fonts -->
+    <link rel="icon" href="https://i.ibb.co/tTdGm1y4/License-Manager-B-1.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 🎨 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-darker: #0a0a0a;
+            --accent: #7B2CBF;
+            --accent-light: #9D4EDD;
+            --text-primary: #f5f5f5;
+            --text-secondary: #b3b3b3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Account Dropdown */
+        .account-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .account-btn {
+            background-color: rgba(123, 44, 191, 0.2);
+            color: var(--text-primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .account-btn:hover {
+            background-color: rgba(123, 44, 191, 0.4);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--bg-darker);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(123, 44, 191, 0.3);
+        }
+        
+        .dropdown-content a {
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: rgba(123, 44, 191, 0.2);
+            color: var(--accent);
+        }
+        
+        .account-dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--bg-darker);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(123, 44, 191, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 28px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        .coming-soon-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .coming-soon-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        .coming-soon-icon {
+            font-size: 80px;
+            color: var(--accent);
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        .coming-soon-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .coming-soon-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--bg-darker);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            border-radius: 5px;
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .countdown-item {
+            background-color: var(--bg-darker);
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 100px;
+            border: 1px solid rgba(123, 44, 191, 0.3);
+        }
+        
+        .countdown-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        
+        .countdown-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        
+        .notify-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .notify-input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: 1px solid rgba(123, 44, 191, 0.5);
+            background-color: var(--bg-darker);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .notify-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .notify-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .notify-button:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        /* Background Animation */
+        .coming-soon-container:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(123, 44, 191, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--bg-darker);
+            padding: 30px 0;
+            border-top: 1px solid rgba(123, 44, 191, 0.2);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .coming-soon-content h1 {
+                font-size: 36px;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .countdown-number {
+                font-size: 28px;
+            }
+            
+            .notify-form {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-key logo-icon"></i>
+                    License<span>Manager</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.php">Home</a>
+                    <a href="index.php#features">Features</a>
+                    <a href="index.php#pricing">Pricing</a>
+                    <a href="TermsofService">Terms</a>
+                    <div class="account-dropdown">
+                        <button class="account-btn">
+                            <i class="fas fa-user"></i> Account <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="Soon"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="Soon"><i class="fas fa-user-plus"></i> Register</a>
+                            <a href="Soon"><i class="fas fa-cog"></i> Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="coming-soon-container">
+        <div class="container">
+            <div class="coming-soon-content">
+                <div class="coming-soon-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h1>Coming Soon</h1>
+                <p>We're working hard to bring you this feature. Our team is developing something amazing that will revolutionize how you manage licenses on Discord and Roblox. Stay tuned for updates!</p>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Development Progress</span>
+                        <span id="progress-percentage">65%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+                
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">30</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">12</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">45</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">22</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+                
+               
+                
+                <div class="social-links">
+ <a href="https://discord.gg/M823NF5K7s"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2025 Arriva Corporation | LicenceManager. All rights reserved. | Currently in development</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown timer (set to 30 days from now)
+        const countdownDate = new Date();
+        countdownDate.setDate(countdownDate.getDate() + 120);
+        
+        function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    if (distance < 0) {
+        // Countdown finished
+        document.getElementById('days').textContent = 0;
+        document.getElementById('hours').textContent = 0;
+        document.getElementById('minutes').textContent = 0;
+        document.getElementById('seconds').textContent = 0;
+        document.getElementById('progress-fill').style.width = '100%';
+        document.getElementById('progress-percentage').textContent = '100%';
+        return; // stop further updates or clearInterval externally
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
+
+    const totalDays = 120; // Make sure this matches your countdown length!
+    const progress = ((totalDays - days) / totalDays) * 100;
+    document.getElementById('progress-fill').style.width = `${progress}%`;
+    document.getElementById('progress-percentage').textContent = `${Math.floor(progress)}%`;
+}
+
+        
+        // Update every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Form submission
+        document.querySelector('.notify-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            // Here you would typically send the email to your server
+            alert(`Thanks! We'll notify you at ${email} when this feature launches.`);
+            this.querySelector('input').value = '';
+        });
+        
+        // Header scroll effect
+        const header = document.querySelector('header');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                header.style.transform = 'translateY(0)';
+                return;
+            }
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
